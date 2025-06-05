@@ -4,21 +4,6 @@
 @theme {
     --bright-blue: hsl(220, 98%, 61%);
     --check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
-
-    --light-grayish-blue: hsl(233, 11%, 84%);
-    --dark-grayish-blue: hsl(236, 9%, 61%);
-    --very-darkg-grayish-blue: hsl(235, 19%, 35%);
-    --Very-light-grayish-blue: hsl(236, 33%, 92%);
-    --very-light-gray: hsl(0, 0%, 98%);
-
-    --very-dark-blue: hsl(235, 21%, 11%);
-    --very-dark-desaturated-blue: hsl(235, 24%, 19%);
-    --light-grayish-blue: hsl(234, 39%, 85%);
-    --light-grayish-blue-hover: hsl(236, 33%, 92%);
-    --dark-grayish-blue: hsl(234, 11%, 52%);
-    --very-dark-grayish-blue: hsl(233, 14%, 35%);
-    --very-dark-grayish-blue: hsl(237, 14%, 26%);
-
 }
 .font-josefin{
     font-family: "Josefin Sans", sans-serif;
@@ -30,11 +15,14 @@
     @apply bg-gray-900; 
 }
 .dark-card{
-    @apply bg-gray-700 text-gray-500;
+    @apply bg-gray-700 text-white;
 }
 .bg-section{
-    @apply font-bold text-white flex flex-col 
+    @apply font-bold text-white flex flex-col; 
 }
 .bg-img{
     @apply bg-[url('src/assets/images/bg-mobile-light.jpg')] sm:bg-[url('src/assets/images/bg-desktop-light.jpg')]  bg-top bg-no-repeat w-[375px] sm:w-auto
+}
+.checked-state{
+    @apply checked:bg-gradient-to-br checked:from-[#57ddff] checked:to-[#c058f3] checked:border-0 checked:before:content-[url(src/assets/images/icon-check.svg)] checked:before:flex checked:before:justify-center
 }
