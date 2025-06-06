@@ -17,16 +17,27 @@
 .dark-card{
     @apply bg-gray-700 text-white ;
 }
+.dark-border{
+    @apply border-transparent shadow-[1px_-1px_68px_-8px_rgba(128,0,128,0.7)];
+}
+.light-border{
+    @apply shadow-[0_0_25px_rgba(128,128,128,0.5)];
+}
+.dark-img{
+    @apply bg-[url('src/assets/images/bg-mobile-dark.jpg')] sm:bg-[url('src/assets/images/bg-desktop-dark.jpg')];
+}
+.light-img{
+    @apply bg-[url('src/assets/images/bg-mobile-light.jpg')] sm:bg-[url('src/assets/images/bg-desktop-light.jpg')];
+}
 .bg-section{
     @apply font-bold text-white flex flex-col; 
 }
 .bg-img{
-    @apply bg-[url('src/assets/images/bg-mobile-light.jpg')] sm:bg-[url('src/assets/images/bg-desktop-light.jpg')]  bg-top bg-no-repeat w-[375px] sm:w-auto
+    @apply bg-top bg-no-repeat w-[375px] sm:w-auto max-w-[1400px] rounded-2xl p-4;
 }
 .checked-state{
-    @apply checked:bg-gradient-to-br checked:from-[#57ddff] checked:to-[#c058f3] checked:border-0 checked:before:content-[url(src/assets/images/icon-check.svg)] checked:before:flex checked:before:justify-center
+    @apply checked:bg-gradient-to-br checked:from-[#57ddff] checked:to-[#c058f3] checked:border-0 checked:before:content-[url(src/assets/images/icon-check.svg)] checked:before:flex checked:before:justify-center;
 }
 .hover-effect:hover{
-    box-shadow: 0 0 2px 2px #c058f3, 0 0 3px 3px #57ddff;
-    border-color: transparent;
+    @apply border-purple-400;
 }

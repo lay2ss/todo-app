@@ -31,7 +31,7 @@ const Home = () => {
     }, [])
 
     return (
-        <main className="bg-img m-auto flex flex-col items-center w-min">
+        <main className={`bg-img m-auto flex flex-col items-center w-min ${mode === "false"? "dark-border dark-img" : "light-border light-img"}`}>
             <div className="bg-section">
                 <div className="flex justify-between px-5"><h1 className=" py-10 text-2xl tracking-[10px] ">TODO</h1>
                     <div className="h-min my-10"><img onClick={handleDarkBg}  src={icon} alt="moon icon" /></div>
@@ -42,7 +42,7 @@ const Home = () => {
                         <input className="hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl checked-state" type="checkbox" id="checkbox" />
                         </div>
                         <div className="flex items-center">
-                        <input className={`px-3 h-5 pt-1 ${mode === "false"? "placeholder:text-white opacity-50" : "placeholder:text-gray-400"}`} type="text" placeholder="Create a new todo..." />
+                        <input className={`px-3 h-5 pt-1 ${mode === "false"? "placeholder:text-white opacity-50" : "placeholder:text-gray-400"}`} type="text" placeholder="Create a new todo..." /> 
                         </div>
                     </div>
                     <div className={`flex mx-auto h-80 w-90 bg-white rounded-sm sm:w-150 sm:h-100 ${mode === "false"? "dark-card" : ""}`}>
