@@ -15,7 +15,7 @@
     @apply bg-gray-900; 
 }
 .dark-card{
-    @apply bg-gray-700 text-white;
+    @apply bg-gray-700 text-white ;
 }
 .bg-section{
     @apply font-bold text-white flex flex-col; 
@@ -25,4 +25,8 @@
 }
 .checked-state{
     @apply checked:bg-gradient-to-br checked:from-[#57ddff] checked:to-[#c058f3] checked:border-0 checked:before:content-[url(src/assets/images/icon-check.svg)] checked:before:flex checked:before:justify-center
+}
+.hover-effect:hover{
+    box-shadow: 0 0 2px 2px #c058f3, 0 0 3px 3px #57ddff;
+    border-color: transparent;
 }
