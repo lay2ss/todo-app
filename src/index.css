@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @tailwind utilities;
 
-@theme {
-    --bright-blue: hsl(220, 98%, 61%);
-    --check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
-}
 .font-josefin{
     font-family: "Josefin Sans", sans-serif;
     font-optical-sizing: auto;

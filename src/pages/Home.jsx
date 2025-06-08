@@ -1,11 +1,13 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
+import {v4 as uuidv4} from "uuid";
 
 const Home = () => {
     let [ isDarkMode, setIsDarkMode ] = useState("false" || mode);
     let [icon, setIcon ] = useState(isDarkMode === "false"? "src/assets/images/icon-moon.svg" : "src/assets/images/icon-sun.svg");
     const [task, setTask] = useState('');
     let [addTask, setAddTask] = useState([]);
+    let [tasksLeft, setTasksLeft] = useState(0);
 
     const handleChange = (e) => {
         setTask(e.target.value);
@@ -14,7 +16,7 @@ const Home = () => {
     const handleKeyDown = (e) => {
         if(e.key === 'Enter') {
             if(task.length !== 0 && task.trim(" ")){
-                setAddTask([...addTask, task]);
+                setAddTask([...addTask, {id: uuidv4(), todo: task, completed: false }]);
                 setTask('');
             } 
         }
@@ -22,6 +24,24 @@ const Home = () => {
     const deleteTask = (index) => {
         setAddTask(addTask.filter((_, i) => i !== index));
     }
+    const handleCompletTask = (index) => {
+        setAddTask(addTask.map((task) => {
+            if(task.id === index){
+                return {...task, completed: !task.completed};
+            }
+            return task;
+        }));
+    }
+    const deleteCompletedTasks = () => {
+        setAddTask(addTask.filter((task) => !task.completed));
+    }
+
+    useEffect(() => {
+        const tasksLeftCount = addTask.filter((task) => !task.completed).length;
+        setTasksLeft(tasksLeftCount);
+        console.log(addTask)
+
+    }, [addTask])
 
     const handleDarkBg = () => {
         isDarkMode === "false"? setIsDarkMode("true") : setIsDarkMode("false") && document.body.classList.remove('dark-bg');
@@ -53,26 +73,26 @@ const Home = () => {
         <main className={`bg-img m-auto flex flex-col items-center w-min ${mode === "false"? "dark-border dark-img" : "light-border light-img"}`}>
             <div className="bg-section">
                 <div className="flex justify-between px-5"><h1 className=" py-10 text-2xl tracking-[10px] ">TODO</h1>
-                    <div className="h-min my-10"><img onClick={handleDarkBg}  src={icon} alt="moon icon" /></div>
+                    <div className="h-min my-10"><img className="hover:cursor-pointer" onClick={handleDarkBg}  src={icon} alt="moon icon" /></div>
                 </div>
                 <div className="grid gap-5 justify-center">
                     <div className={`px-5 mx-auto h-10 w-90 bg-white rounded-sm sm:w-150 flex ${mode === "false"? "dark-card" : ""}`}>
                         <div className="flex items-center">
-                        <input className="hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl checked-state" type="checkbox" />
+                        <input className="appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl" type="checkbox" disabled />
                         </div>
                         <div className="flex items-center">
                         <input className={`px-3 h-5 pt-1 ${mode === "false"? "placeholder:text-white opacity-50 text-white" : "placeholder:text-gray-400 text-gray-400"}`} type="text" onKeyDownCapture={handleKeyDown} value={task} onChange={handleChange} placeholder="Create a new todo..." /> 
                         </div>
                     </div>
                     <div className={`flex flex-col mx-auto h-80 w-90 bg-white rounded-sm sm:w-150 sm:h-100 overflow-y-auto overflow-x-hidden ${mode === "false"? "dark-card" : ""}`}> 
-                        <div>{addTask.map((task, index ) => 
-                            (<div key={index} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-600" : "border-gray-200 border-r-transparent border-l-transparent"}`}>
+                        <div>{addTask.map((task, index) => 
+                            (<div key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-600" : "border-gray-200 border-r-transparent border-l-transparent"}`}>
                                 <div className="flex items-center">
-                                    <input className="hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl checked-state" type="checkbox" />
+                                    <input className = "hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl checked-state hover:cursor-pointer" type="checkbox" onClick={() => handleCompletTask(task.id)} />
                                 </div>
                                 <div className="flex items-center w-90 sm:w-150 justify-between">
-                                    <p className={`px-3 h-5 ${mode === "false"? "opacity-50 text-white" : "text-gray-400"}`}>{task} </p>             
-                                    <img onClick={() => deleteTask(index)} src="src/assets/images/icon-cross.svg" alt="cross icon" />               
+                                    <p className={`px-3 h-5 ${mode === "false"? "opacity-50 text-white" : "text-gray-400"} ${task.completed ? "text-purple-300 line-through" : ""}`}>{task.todo}</p>             
+                                    <img className="hover:cursor-pointer" onClick={() => deleteTask(index)} src="src/assets/images/icon-cross.svg" alt="cross icon" />               
                                 </div>
                             </div>)
                             )}      
@@ -80,32 +100,32 @@ const Home = () => {
                         <div className="text-gray-400 flex">
                         </div>
                         <div className={`border-2 sm:hidden text-gray-400 grid grid-cols-2 mt-auto w-90 opacity-60 h-12 p-3 ${mode === "false"? "border-gray-600" : " border-gray-200 border-r-transparent border-l-transparent"}`}>
-                                <div className="pl-5"><p>5 left</p></div>
-                                <div className="justify-self-end pr-5"><button>Clear Completed</button></div>
+                                <div className="pl-5"><p>{tasksLeft} left</p></div>
+                                <div className="justify-self-end pr-5 "><button className="hover:cursor-pointer" onClick={deleteCompletedTasks}>Clear Completed</button></div>
                         </div>
                         <div className={`border-2 hidden justify-center items-center p-3 h-12 bg-white rounded-sm sm:grid grid-cols-3 gap-0.5 text-gray-500 mt-auto opacity-60 ${mode === "false"? "dark-card border-gray-600" : " border-gray-200 border-r-transparent border-l-transparent"}`}>
                             <div className="opacity-60">
-                                <p>5 left</p>
+                                <p>{tasksLeft} left</p>
                             </div>
                             <div className="flex gap-5">
-                                <div><button className="">All</button></div>
-                                <div><button className="">Active</button></div> 
-                                <div><button className="">Completed</button></div>
+                                <div><button className="hover:cursor-pointer">All</button></div>
+                                <div><button className="hover:cursor-pointer">Active</button></div> 
+                                <div><button className="hover:cursor-pointer">Completed</button></div>
                             </div>
                             <div className="justify-self-end opacity-60">
-                                <button className="">Clear Completed</button>
+                                <button className="hover:cursor-pointer hover:text-blue-500" onClick={deleteCompletedTasks}>Clear Completed</button>
                             </div>
                         </div>
                     </div>
                     <div className={`flex justify-center items-center mx-auto w-90 h-10 bg-white rounded-sm sm:hidden gap-5 text-gray-600 ${mode === "false"? "dark-card" : ""}`}>
                         <div className="opacity-60">
-                            <button className="">All</button>
+                            <button className="hover:cursor-pointer">All</button>
                         </div>
                         <div className="opacity-60">
-                            <button className="">Active</button>
+                            <button className="hover:cursor-pointer">Active</button>
                         </div> 
                         <div className="opacity-60">
-                            <button className="">Completed</button>
+                            <button className="hover:cursor-pointer">Completed</button>
                         </div>
                     </div>
                     <div className="flex justify-center pt-3">
