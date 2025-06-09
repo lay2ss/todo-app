@@ -67,6 +67,23 @@ const Home = () => {
 
     }, [filterTasks, addTask]);
 
+    const handleDragStart = (e, taskId, index) => {
+        e.dataTransfer.setData('taskId', taskId);
+        e.dataTransfer.setData('draggedIndex', index.toString());
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = (e, targetIndex) => {
+        const draggedIndex = parseInt(e.dataTransfer.getData('draggedIndex'));
+        const newTasks = [...addTask];
+        const [draggedTask] = newTasks.splice(draggedIndex, 1);
+        newTasks.splice(targetIndex, 0, draggedTask);
+        setAddTask(newTasks);
+    };
+
     const handleDarkBg = () => {
         isDarkMode === "false"? setIsDarkMode("true") : setIsDarkMode("false") && document.body.classList.remove('dark-bg');
         document.body.classList.add('dark-bg');
@@ -110,8 +127,14 @@ const Home = () => {
                             </div>
                         </div>
                         <div className={`flex flex-col mx-auto h-80 w-90 bg-white rounded-sm sm:w-150 sm:h-100 overflow-y-auto overflow-x-hidden ${mode === "false"? "dark-card" : ""}`}> 
-                            <div>{(filterTasks === "All" ? addTask : filteredTasks).map((task, index) => 
-                                (<div key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent"}`}>
+                            <div>
+                                {(filterTasks === "All" ? addTask : filteredTasks).map((task, index) => 
+                                (<div
+                                    draggable={true}
+                                    onDragStart={(e) => handleDragStart(e, task.id, index)}
+                                    onDragOver={(e) => handleDragOver(e)}
+                                    onDrop={(e) => handleDrop(e, index)}
+                                    key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent"}`}>
                                     <div className="flex items-center">
                                         <input className = "hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl  hover:cursor-pointer checked-state"  type="checkbox" checked={task.completed} onClick={() => handleCompletTask(task.id)} />
                                     </div>
