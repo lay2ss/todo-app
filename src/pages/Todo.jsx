@@ -4,7 +4,7 @@ import {v4 as uuidv4} from "uuid";
 
 const Todo = () => {
     let [ isDarkMode, setIsDarkMode ] = useState("false" || mode);
-    let [icon, setIcon ] = useState(isDarkMode === "false"? "/assets/images/icon-moon.svg" : "/assets/images/icon-sun.svg");
+    let [icon, setIcon ] = useState(isDarkMode === "false"? "assets/images/icon-moon.svg" : "assets/images/icon-sun.svg");
     const [task, setTask] = useState('');
     let [addTask, setAddTask] = useState([] || storedTasks);
     let [tasksLeft, setTasksLeft] = useState(0);
@@ -22,7 +22,7 @@ const Todo = () => {
         }
     }, []);
 
-    const handleChange = (e) => {
+    const handleChange = (e) => { 
         setTask(e.target.value);
     }
     const handleKeyDown = (e) => {
@@ -93,9 +93,9 @@ const Todo = () => {
     useEffect(() => {
         if(isDarkMode === "false"){
             document.body.classList.remove('dark-bg');
-            setIcon("/assets/images/icon-moon.svg");
+            setIcon("assets/images/icon-moon.svg");
         } else {
-            setIcon("/assets/images/icon-sun.svg");
+            setIcon("assets/images/icon-sun.svg");
         }
     }, [isDarkMode])
 
@@ -103,10 +103,10 @@ const Todo = () => {
     useEffect(() => {
         if(mode === "true"){
             document.body.classList.remove('dark-bg');
-            setIcon("/assets/images/icon-moon.svg");
+            setIcon("assets/images/icon-moon.svg");
         } else {
             document.body.classList.add('dark-bg');
-            setIcon("/assets/images/icon-sun.svg");
+            setIcon("assets/images/icon-sun.svg");
         }
     }, [])
 
@@ -140,7 +140,7 @@ const Todo = () => {
                                     </div>
                                     <div className="flex items-center w-90 sm:w-150 justify-between overflow-x-auto">
                                         <p className={`px-3 h-5 ${mode === "false"? "opacity-50" : "text-gray-400"} ${task.completed ? "text-purple-300 line-through" : ""}`}>{task.todo}</p>             
-                                        <img className="hover:cursor-pointer" onClick={() => deleteTask(index)} src="/assets/images/icon-cross.svg" alt="cross icon" />               
+                                        <img className="hover:cursor-pointer" onClick={() => deleteTask(index)} src="assets/images/icon-cross.svg" alt="cross icon" />               
                                     </div>
                                 </div>)
                                 )}      
