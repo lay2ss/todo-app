@@ -29,5 +29,5 @@ During this challenge, I learned:
 You can check out the project live here:  
 🔗*https://lay2ss.github.io/todo-app/* 
 
-![Preview](src/assets/images/preview-light-mode.jpg)
-![Preview](src/assets/images/preview-dark-mode.jpg)
+![Preview](/assets/images/preview-light-mode.jpg)
+![Preview](/assets/images/preview-dark-mode.jpg)
