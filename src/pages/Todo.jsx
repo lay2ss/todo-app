@@ -2,7 +2,7 @@
 import { useState, useEffect} from "react";
 import {v4 as uuidv4} from "uuid";
 
-const Home = () => {
+const Todo = () => {
     let [ isDarkMode, setIsDarkMode ] = useState("false" || mode);
     let [icon, setIcon ] = useState(isDarkMode === "false"? "src/assets/images/icon-moon.svg" : "src/assets/images/icon-sun.svg");
     const [task, setTask] = useState('');
@@ -123,7 +123,7 @@ const Home = () => {
                             <input className="appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl" type="checkbox" disabled />
                             </div>
                             <div className="flex items-center">
-                            <input className={`pl-3 h-5 pt-1 outline-none border-none ${mode === "false"? "placeholder:text-white opacity-50 text-white" : "placeholder:text-gray-400 text-gray-400"}`} type="text" onKeyDownCapture={handleKeyDown} value={task} onChange={handleChange} placeholder="Create a new todo..." /> 
+                            <input className={`pl-3 h-5 pt-1 w-75 sm:w-135 outline-none border-none ${mode === "false"? "placeholder:text-white opacity-50 text-white" : "placeholder:text-gray-400 text-gray-400"}`} type="text" onKeyDownCapture={handleKeyDown} value={task} onChange={handleChange} placeholder="Create a new todo..." /> 
                             </div>
                         </div>
                         <div className={`flex flex-col mx-auto h-80 w-90 bg-white rounded-sm sm:w-150 sm:h-100 overflow-y-auto overflow-x-hidden ${mode === "false"? "dark-card" : ""}`}> 
@@ -186,4 +186,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Todo

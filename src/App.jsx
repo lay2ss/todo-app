@@ -1,8 +1,8 @@
-import Home from "./pages/Home";
+import Todo from "./pages/Todo";
 
 const App = () => {
     return (
-        <Home></Home>
+        <Todo></Todo>
     )
 }
 
