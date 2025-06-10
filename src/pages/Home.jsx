@@ -123,7 +123,7 @@ const Home = () => {
                             <input className="appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl" type="checkbox" disabled />
                             </div>
                             <div className="flex items-center">
-                            <input className={`px-3 h-5 pt-1 ${mode === "false"? "placeholder:text-white opacity-50 text-white" : "placeholder:text-gray-400 text-gray-400"}`} type="text" onKeyDownCapture={handleKeyDown} value={task} onChange={handleChange} placeholder="Create a new todo..." /> 
+                            <input className={`pl-3 h-5 pt-1 outline-none border-none ${mode === "false"? "placeholder:text-white opacity-50 text-white" : "placeholder:text-gray-400 text-gray-400"}`} type="text" onKeyDownCapture={handleKeyDown} value={task} onChange={handleChange} placeholder="Create a new todo..." /> 
                             </div>
                         </div>
                         <div className={`flex flex-col mx-auto h-80 w-90 bg-white rounded-sm sm:w-150 sm:h-100 overflow-y-auto overflow-x-hidden ${mode === "false"? "dark-card" : ""}`}> 
@@ -134,12 +134,12 @@ const Home = () => {
                                     onDragStart={(e) => handleDragStart(e, task.id, index)}
                                     onDragOver={(e) => handleDragOver(e)}
                                     onDrop={(e) => handleDrop(e, index)}
-                                    key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent"}`}>
-                                    <div className="flex items-center">
+                                    key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent cursor-pointer"}`}>
+                                    <div className="flex items-center ">
                                         <input className = "hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl  hover:cursor-pointer checked-state"  type="checkbox" checked={task.completed} onClick={() => handleCompletTask(task.id)} />
                                     </div>
-                                    <div className="flex items-center w-90 sm:w-150 justify-between">
-                                        <p className={`px-3 h-5 ${mode === "false"? "opacity-50 text-white" : "text-gray-400"} ${task.completed ? "text-purple-300 line-through" : ""}`}>{task.todo}</p>             
+                                    <div className="flex items-center w-90 sm:w-150 justify-between overflow-x-auto">
+                                        <p className={`px-3 h-5 ${mode === "false"? "opacity-50" : "text-gray-400"} ${task.completed ? "text-purple-300 line-through" : ""}`}>{task.todo}</p>             
                                         <img className="hover:cursor-pointer" onClick={() => deleteTask(index)} src="src/assets/images/icon-cross.svg" alt="cross icon" />               
                                     </div>
                                 </div>)
@@ -148,12 +148,12 @@ const Home = () => {
                             <div className="text-gray-400 flex">
                             </div>
                             <div className={`border-2 sm:hidden text-gray-400 grid grid-cols-2 mt-auto w-90 opacity-60 h-12 p-3 ${mode === "false"? "border-gray-700" : " border-gray-200 border-r-transparent border-l-transparent"}`}>
-                                    <div className="pl-5"><p>{tasksLeft} left</p></div>
+                                    <div className="pl-5"><p>{`${tasksLeft} ${tasksLeft > 1 ? "items" : "item"} left`}</p></div>
                                     <div className="justify-self-end pr-5 "><button className="hover:cursor-pointer hover:text-blue-500" onClick={deleteCompletedTasks}>Clear Completed</button></div>
                             </div>
                             <div className={`border-2 hidden justify-center items-center p-3 h-12 bg-white rounded-sm sm:grid grid-cols-3 gap-0.5 text-gray-500 mt-auto opacity-60 ${mode === "false"? "dark-card border-gray-700" : " border-gray-200 border-r-transparent border-l-transparent"}`}>
                                 <div className="opacity-60">
-                                    <p>{tasksLeft} left</p>
+                                    <p>{`${tasksLeft} ${tasksLeft > 1 ? "items" : "item"} left`}</p>
                                 </div>
                                 <div className="flex gap-5">
                                     <div><button className={`hover:cursor-pointer hover:text-blue-500 ${filterTasks === "All" ? "text-blue-500" : ""}`} onClick={handleAll}>All</button></div>
