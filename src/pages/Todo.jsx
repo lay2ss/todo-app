@@ -52,7 +52,7 @@ const Todo = () => {
         const tasksLeftCount = addTask.filter((task) => !task.completed).length;
         setTasksLeft(tasksLeftCount);
 
-    }, [addTask])
+    }, [addTask]);
 
     const handleAll = () => setFilterTasks("All");
     const handleActive = () => setFilterTasks("Active");
@@ -63,18 +63,18 @@ const Todo = () => {
             setFilteredTasks(addTask.filter((task) => task.completed));
         } else if(filterTasks === "Active"){
             setFilteredTasks(addTask.filter((task) => !task.completed));
-        };
+        }
 
     }, [filterTasks, addTask]);
 
     const handleDragStart = (e, taskId, index) => {
         e.dataTransfer.setData('taskId', taskId);
         e.dataTransfer.setData('draggedIndex', index.toString());
-    };
+    }
 
     const handleDragOver = (e) => {
         e.preventDefault();
-    };
+    }
 
     const handleDrop = (e, targetIndex) => {
         const draggedIndex = parseInt(e.dataTransfer.getData('draggedIndex'));
@@ -82,14 +82,15 @@ const Todo = () => {
         const [draggedTask] = newTasks.splice(draggedIndex, 1);
         newTasks.splice(targetIndex, 0, draggedTask);
         setAddTask(newTasks);
-    };
+    }
 
     const handleDarkBg = () => {
         isDarkMode === "false"? setIsDarkMode("true") : setIsDarkMode("false") && document.body.classList.remove('dark-bg');
         document.body.classList.add('dark-bg');
+        
         localStorage.setItem('mode', isDarkMode);
-
     }
+    
     useEffect(() => {
         if(isDarkMode === "false"){
             document.body.classList.remove('dark-bg');
@@ -97,25 +98,27 @@ const Todo = () => {
         } else {
             setIcon("assets/images/icon-sun.svg");
         }
-    }, [isDarkMode])
+    }, [isDarkMode]);
 
     let mode = localStorage.getItem('mode', isDarkMode);
     useEffect(() => {
-        if(mode === "true"){
-            document.body.classList.remove('dark-bg');
-            setIcon("assets/images/icon-moon.svg");
-        } else {
-            document.body.classList.add('dark-bg');
-            setIcon("assets/images/icon-sun.svg");
+        if(mode) {
+            if(mode === "true"){
+                document.body.classList.remove('dark-bg');
+                setIcon("assets/images/icon-moon.svg");
+            } else {
+                document.body.classList.add('dark-bg');
+                setIcon("assets/images/icon-sun.svg");
+            }
         }
-    }, [])
+    }, []);
 
     return (
         <main className="flex items-center h-[100vh]">
             <div className={`bg-img m-auto flex flex-col items-center w-min ${mode === "false"? "dark-border dark-img" : "light-border light-img"}`}>
                 <div className="bg-section">
                     <div className="flex justify-between px-5"><h1 className=" py-10 text-2xl tracking-[10px] ">TODO</h1>
-                        <div className="h-min my-10"><img className="hover:cursor-pointer" onClick={handleDarkBg}  src={icon} alt="moon icon" /></div>
+                        <div className="h-min my-10"><img className="hover:cursor-pointer" onClick={handleDarkBg}  src={icon} alt={`${isDarkMode === "false" ? "moon icon" : "sun icon"}`} /></div>
                     </div>
                     <div className="grid gap-5 justify-center">
                         <div className={`px-5 mx-auto h-10 w-90 bg-white rounded-sm sm:w-150 flex ${mode === "false"? "dark-card" : ""}`}>
