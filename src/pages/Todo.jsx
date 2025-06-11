@@ -84,6 +84,31 @@ const Todo = () => {
         setAddTask(newTasks);
     }
 
+    const handleTouchStart = (index) => {
+        const handleTouchEnd = (e) => {
+            const touch = e.changedTouches[0];
+            const elements = document.querySelectorAll('.task-item');
+            let targetIndex = index;
+
+            elements.forEach((element, i) => {
+                const rect = element.getBoundingClientRect();
+                if (touch.clientY > rect.top && touch.clientY < rect.bottom) {
+                    targetIndex = i;
+                }
+            });
+
+            const newTasks = [...addTask];
+            const [draggedTask] = newTasks.splice(index, 1);
+            newTasks.splice(targetIndex, 0, draggedTask);
+            setAddTask(newTasks);
+
+            document.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    document.addEventListener('touchend', handleTouchEnd);
+
+    };
+
     const handleDarkBg = () => {
         isDarkMode === "false"? setIsDarkMode("true") : setIsDarkMode("false") && document.body.classList.remove('dark-bg');
         document.body.classList.add('dark-bg');
@@ -137,9 +162,10 @@ const Todo = () => {
                                     onDragStart={(e) => handleDragStart(e, task.id, index)}
                                     onDragOver={(e) => handleDragOver(e)}
                                     onDrop={(e) => handleDrop(e, index)}
-                                    key={task.id} className={`border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent cursor-pointer"}`}>
+                                    onTouchStart={() => handleTouchStart(index)}
+                                    key={task.id} className={`task-item border-1 px-5 mx-auto h-10 w-90 bg-white sm:w-150 flex ${mode === "false"? "dark-card border-gray-700" : "border-gray-200 border-r-transparent border-l-transparent cursor-pointer"}`}>
                                     <div className="flex items-center ">
-                                        <input className = "hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl  hover:cursor-pointer checked-state"  type="checkbox" checked={task.completed} onClick={() => handleCompletTask(task.id)} />
+                                        <input className = "hover-effect appearance-none w-5 h-5 border-gray-400 border-2 rounded-xl  hover:cursor-pointer checked-state"  type="checkbox" checked={task.completed} onChange={() => handleCompletTask(task.id)} />
                                     </div>
                                     <div className="flex items-center w-90 sm:w-150 justify-between overflow-x-auto">
                                         <p className={`px-3 h-5 ${mode === "false"? "opacity-50" : "text-gray-400"} ${task.completed ? "text-purple-300 line-through" : ""}`}>{task.todo}</p>             
