@@ -221,7 +221,7 @@ const Todo = () => {
 
     return (
         <main className="flex items-center h-[100vh]">
-            <div className={`bg-img m-auto flex flex-col items-center w-min ${mode === "false"? "dark-border dark-img" : "light-border light-img"}`}>
+            <div className={`select-none  bg-img m-auto flex flex-col items-center w-min ${mode === "false"? "dark-border dark-img" : "light-border light-img"}`}>
                 <div className="bg-section">
                     <div className="flex justify-between px-5"><h1 className=" py-10 text-2xl tracking-[10px] ">TODO</h1>
                         <div className="h-min my-10"><img className="hover:cursor-pointer" onClick={handleDarkBg}  src={icon} alt={`${isDarkMode === "false" ? "moon icon" : "sun icon"}`} /></div>
